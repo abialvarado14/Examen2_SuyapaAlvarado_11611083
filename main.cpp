@@ -158,7 +158,19 @@ int main(){
 							cout << "Ingrese su apuesta: ";
 							cin >> apuesta;
 							}//VALIDACION DEL DINERO
-							SimuladorJuego();
+							ganador = SimuladorJuego();
+
+							if (ganador==true){
+								cout << "Has ganado!!! " << apuesta*2 << " Lps" << endl;
+								Jugadores[posjugador]->setDinero(Jugadores[posjugador]->getDinero()+apuesta*2);
+								cout << "Tu saldo actual es: " << Jugadores[posjugador]->getDinero() << "Lps" << endl;
+							}else{
+								cout << "Has perdido!! " << apuesta << "Lps" << endl;
+								Jugadores[posjugador]->setDinero(Jugadores[posjugador]->getDinero()-apuesta);
+								cout << "Tu saldo actual es: " << Jugadores[posjugador]->getDinero() << "Lps" << endl;
+								Mesas[posjuego]->getRepartidor()->setDinero(Mesas[posjuego]->getRepartidor()->getDinero()+apuesta);
+
+							}
 
 
 						}else{
