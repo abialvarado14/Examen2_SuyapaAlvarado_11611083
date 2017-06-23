@@ -118,8 +118,30 @@ int main(){
 
 				break;
 			}//FIN CASO3, CREAR REPARTIDOR
-		}//FIN SWITCH MENU GENERAL
 
+			case 4:{
+				cout << "---LOGIN JUGADORES---" << endl << endl;
+				cout << "Ingrese su nombre: ";
+				cin >> nombre;
+				cout << "Ingrese su ID: ";
+				cin >> ID;
+
+				for (int i = 0; i < Jugadores.size(); ++i)
+				{
+					if (Jugadores[i]->getNombre()==nombre && Jugadores[i]->getID() == ID){
+						cout << "---BIENVENIDO A BLACKJACK!!";
+					}else{
+						if (i==Jugadores.size()-1)
+							cout << "USUARIO INCORRECTO";
+					}//FIN IF, VALIDACION USUARIOS IGUALES
+					
+				}//FIN FOR, LOGIN..
+				break;
+			}//FIN CASO 4, LOGIN JUGADOR
+		}//FIN SWITCH MENU GENERAL
+		cout << "-----BIENVENIDO A BLACK JACK-----" << endl << endl;
+		cout << "Ingrese la opción que desea: \n1.Crear Jugador\n2.Crear Administrador\n3.Crear Repartidor\n4.Login como jugador\n5.Login como Administrador:\n6.Salir ";
+		cin >> opc;
 	}//FIN WHILE, MENU GENERAL
 
 
