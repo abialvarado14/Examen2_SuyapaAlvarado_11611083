@@ -94,7 +94,7 @@ int main(){
 
 			case 3:{
 				cout << "-------Crear Repartidor----" << endl << endl;
-				cout << "Dificultad: \n1.Dificil\n2.Intermedio\3.Facil: ";
+				cout << "Dificultad: \n1.Dificil\n2.Intermedio\n3.Facil: ";
 				cin >> difopc;
 				if (difopc==1)
 					dificultad = "Dificil";
@@ -513,6 +513,8 @@ bool SimuladorJuego(){
 					cout << "EMPATE!!" << endl;
 					ganador = false;
 				}
+
+				return ganador;
 			}
 
 	
