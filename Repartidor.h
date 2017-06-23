@@ -21,6 +21,7 @@ public:
 	void setDificultad(string Dificultad);
 	double getDinero();
 	void setDinero(double Dinero);
+	Baraja* getBaraja();
 
 
 

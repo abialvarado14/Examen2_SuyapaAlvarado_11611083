@@ -8,8 +8,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h>
+#include <time.h>
 
-bool SimuladorJuego(Baraja* baraj);
+bool SimuladorJuego();
 
 int main(){
 	vector <Mesa*> Mesas;
@@ -20,7 +22,8 @@ int main(){
 	string lugar, apodo, nombre, ID, rango, dificultad, tipo;
 	int edad, year, posjuego;
 	double dineroj, sueldo, apuesta;
-	bool habilitado;
+	bool habilitado, ganador;
+	srand(time(NULL));
 	
 
 	cout << "-----BIENVENIDO A BLACK JACK-----" << endl << endl;
@@ -94,11 +97,11 @@ int main(){
 				cout << "Dificultad: \n1.Dificil\n2.Intermedio\3.Facil: ";
 				cin >> difopc;
 				if (difopc==1)
-					dificultad = "GerenteTiempoCompleto";
+					dificultad = "Dificil";
 				else if (difopc==2)
-					dificultad = "GerenteMedioTiempo";
+					dificultad = "Intermedio";
 				else
-					dificultad = "GerenteGeneral";
+					dificultad = "Facil";
 
 
 				cout << "Dinero dado al casino: ";
@@ -155,7 +158,7 @@ int main(){
 							cout << "Ingrese su apuesta: ";
 							cin >> apuesta;
 							}//VALIDACION DEL DINERO
-
+							SimuladorJuego();
 
 
 						}else{
@@ -313,7 +316,197 @@ int main(){
 
 }
 
-bool SimuladorJuego(Baraja* baraj){
+bool SimuladorJuego(){
+	string* valor = new string[13];
+	bool ganador;
+	string* palo = new string[4];
+	string CartTemp, ValorTemp; //Guarda el string de la carta, para mostrarla.
+	vector <string> baraja; //Guarda las cartas que ya se han repartido
+	bool turnopc = true; //Valida si la pc puede tomar turno o no, dependiendo si gana o no el humano
+	vector <string> player1;
+	vector <string> player2;
+	int contplayer1, contplayer2;
+	char resp;
+
+	valor[0] = "A";
+	valor[1] = "2";
+	valor[2] = "3";
+	valor[3] = "4";
+	valor[4] = "5";
+	valor[5] = "6";
+	valor[6] = "7";
+	valor[7] = "8";
+	valor[8] = "9";
+	valor[9] = "10";
+	valor[10] = "J";
+	valor[11] = "Q";
+	valor[12] = "K";
+
+	palo[0] = "♥";
+	palo[1] = "♠";
+	palo[2] = "♦";
+	palo[3] = "♣";
+
+	contplayer2=0;
+			contplayer1=0;
+			ValorTemp = valor[rand()%12];
+			CartTemp = ValorTemp + palo[rand()%3];
+			player1.push_back(CartTemp);
+			baraja.push_back(CartTemp);
+
+			if (CartTemp == "A")
+				contplayer1 = contplayer1+11;
+			else if (ValorTemp == "J" || ValorTemp == "Q" || ValorTemp== "K")
+				contplayer1 = contplayer1+10;
+			 else
+				contplayer1 = atoi(CartTemp.c_str());
+
+			cout << "----Juego de Cliente" << "----" << endl;
+			cout << "\n\nCarta: " << CartTemp << endl;
+			cout << "Suman:" << contplayer1 << endl;
+
+			do{
+				ValorTemp = valor[rand()%12];
+				CartTemp = ValorTemp + palo[rand()%3];
+
+				for (int i = 0; i < baraja.size(); ++i)
+				{
+					if (CartTemp==baraja[i]){
+						ValorTemp = valor[rand()%12];
+						CartTemp = ValorTemp + palo[rand()%3];
+						i=0;
+					}
+				}
+				baraja.push_back(CartTemp);
+				player1.push_back(CartTemp);
+
+				if (ValorTemp == "A"){
+					if (contplayer1+11>21)
+						contplayer1= contplayer1+1;
+					else
+						contplayer1 = contplayer1+11;
+					
+				} else if ((ValorTemp == "J") || (ValorTemp == "Q") || (ValorTemp== "K"))
+				contplayer1 = contplayer1+10;
+				else
+				contplayer1 = contplayer1+atoi(CartTemp.c_str());
+				
+				//Imprime el resumen de su juego
+				cout << "\n\nCarta: " << CartTemp << endl;
+				cout << "Suman:" << contplayer1 << endl;
+
+				if (contplayer1==21){
+					cout << " JUGADOR HAS SIDO EL GANADOR!!" << endl;
+					ganador = true; // GANO JUGADOR
+					resp = 'n'; 
+					turnopc = false;
+				}else if (contplayer1>21){
+					cout << "EL REPARTIDOR HA GANADO!!" << endl;
+					ganador = false;
+					resp = 'n';
+					turnopc = false;
+				}else{
+					cout << "Quieres pedir mas cartas?? [s/n] ";
+					cin >> resp;
+					turnopc = true;
+				}
+			}
+			while (resp == 's' || resp == 'S');
+			//TURNO PC
+
+			if (turnopc==true){
+
+				ValorTemp = valor[rand()%12];
+				CartTemp = ValorTemp + palo[rand()%3];
+				//VALIDACIÓN SI HAY CARTAS REPETIDAS
+				for (int i = 0; i < baraja.size(); ++i)
+				{
+					if (CartTemp==baraja[i]){
+						ValorTemp = valor[rand()%12];
+						CartTemp = ValorTemp + palo[rand()%3];
+						i=0;
+					}
+				}
+				baraja.push_back(CartTemp);
+				player2.push_back(CartTemp);
+
+				if (ValorTemp == "A")
+					contplayer2 = 11;
+				else if ((ValorTemp == "J") || (ValorTemp == "Q") || (ValorTemp== "K"))
+					contplayer2 = 10;
+				else
+					contplayer2 = atoi(CartTemp.c_str());
+
+				cout << "----Juego de " << "Repartidor " << "----" << endl;
+				cout << "\n\nCarta: " << CartTemp << endl;
+				cout << "Suman: " << contplayer2 << endl;
+
+			do{
+				ValorTemp = valor[rand()%12];
+				CartTemp = ValorTemp + palo[rand()%3];
+				//VALIDACION CARTA REPETIDA
+				for (int i = 0; i < baraja.size(); ++i)
+				{
+					if (CartTemp==baraja[i]){
+						ValorTemp = valor[rand()%12];
+						CartTemp = ValorTemp + palo[rand()%3];
+						i=0;
+					}
+				}
+
+				baraja.push_back(CartTemp);
+				player2.push_back(CartTemp);
+
+				if (ValorTemp == "A"){
+					if (contplayer2+11>21)
+						contplayer2= contplayer2+1;
+					else
+						contplayer2 = contplayer2+11;
+					
+				} else if ((ValorTemp == "J") || (ValorTemp == "Q") || (ValorTemp== "K"))
+				contplayer2 = contplayer2+10;
+				 else
+				contplayer2 = contplayer2+atoi(CartTemp.c_str());
+				
+				//Imprime el resumen de su juego
+				cout << "\n\nCarta: " << CartTemp << endl;
+				cout << "Suman:" << contplayer2 << endl;
+
+				if (contplayer2==21){
+					cout << "EL REPARTIDOR HA GANADO!!" << endl;
+					ganador = false;
+					
+				}else if (contplayer2>21){
+					cout << " JUGADOR HAS SIDO EL GANADOR!!" << endl;
+					ganador = true;
+
+				}else{
+					if (contplayer2==20 || contplayer2==19)//El repartidor abandona, porque sus oportunidades de ganar son mayores si no agarra mas cartas
+						resp = 'E';		
+				}
+			}
+			while (contplayer2<21 && resp != 'E');
+		}
+				
+			
+			if (turnopc==true && resp== 'E'){
+				if(contplayer2>contplayer1){
+					cout << "EL REPARTIDOR HA GANADO!!" << endl;
+					ganador = false; //GANO REPARTIDOR
+
+				}else if (contplayer2<contplayer1){
+					cout << " JUGADOR HAS SIDO EL GANADOR!!" << endl;
+					ganador = true; // GANO JUGADOR
+				}else{
+					cout << "EMPATE!!" << endl;
+					ganador = false;
+				}
+			}
+
+	
+	
+
+
 
 
 }

@@ -16,7 +16,7 @@ return Dificultad;
 }
 
 void Repartidor::setDificultad(string Dificultad){
-this->Dificultad =Dificultad;
+	this->Dificultad =Dificultad;
 }
 
 double Repartidor::getDinero(){
@@ -25,5 +25,11 @@ return Dinero;
 }
 
 void Repartidor::setDinero(double Dinero){
-this->Dinero =Dinero;
+	this->Dinero =Dinero;
 }
+
+Baraja* Repartidor::getBaraja(){
+	return baraj;
+}
+
+
