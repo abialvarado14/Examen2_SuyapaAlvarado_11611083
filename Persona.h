@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Baraja.h"
 using namespace std;
 class Persona{
 

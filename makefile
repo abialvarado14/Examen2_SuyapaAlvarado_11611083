@@ -22,6 +22,9 @@ Cartas.o:	Cartas.h Cartas.cpp
 Mesa.o:	Mesa.h Mesa.cpp 
 	g++ -c Mesa.cpp
 
+Baraja.o:	Baraja.h Baraja.cpp 
+	g++ -c Baraja.cpp
+
 
 
 
