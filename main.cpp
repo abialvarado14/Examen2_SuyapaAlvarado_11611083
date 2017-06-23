@@ -14,6 +14,7 @@ int main(){
 	vector <Repartidor*> Repartidores;
 	vector <Administrador*> Administradores;
 	vector <Jugador*> Jugadores;
+	
 
 
 

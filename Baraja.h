@@ -13,7 +13,8 @@ protected:
 vector<Cartas*> bar;
 
 public:
-Baraja();
+	Baraja();
+
 
 
 

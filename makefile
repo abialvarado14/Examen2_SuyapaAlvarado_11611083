@@ -1,7 +1,7 @@
-main: Administrador.o Persona.o Mesa.o Repartidor.o Jugador.o Cartas.o main.o
-	g++ Administrador.o Persona.o Mesa.o Repartidor.o Jugador.o Cartas.o main.o -o main
+main: Administrador.o Persona.o Mesa.o Repartidor.o Jugador.o Cartas.o Baraja.o main.o
+	g++ Administrador.o Persona.o Mesa.o Repartidor.o Jugador.o Cartas.o main.o Baraja.o -o main
 
-main.o: main.cpp Administrador.h Persona.h Mesa.h Repartidor.h Jugador.h Cartas.h 
+main.o: main.cpp Administrador.h Persona.h Mesa.h Repartidor.h Jugador.h Cartas.h Baraja.h
 	g++ -c main.cpp
 
 Administrador.o:		Administrador.h Administrador.cpp Persona.h
