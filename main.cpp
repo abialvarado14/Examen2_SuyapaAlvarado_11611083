@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+bool SimuladorJuego(Baraja* baraj);
+
 int main(){
 	vector <Mesa*> Mesas;
 	vector <Repartidor*> Repartidores;
@@ -16,8 +18,9 @@ int main(){
 	vector <Jugador*> Jugadores;
 	int opc, rangopc, difopc, opc2, num, tipopc, posjug, posrep, posmesa;
 	string lugar, apodo, nombre, ID, rango, dificultad, tipo;
-	int edad, year;
-	double dineroj, sueldo;
+	int edad, year, posjuego;
+	double dineroj, sueldo, apuesta;
+	bool habilitado;
 	
 
 	cout << "-----BIENVENIDO A BLACK JACK-----" << endl << endl;
@@ -130,7 +133,37 @@ int main(){
 				for (int i = 0; i < Jugadores.size(); ++i)
 				{
 					if (Jugadores[i]->getNombre()==nombre && Jugadores[i]->getID() == ID){
+						int posjugador = i;
 						cout << "---BIENVENIDO AL JUEGO BLACKJACK!!" << endl << endl;
+						
+						for (int i = 0; i < Mesas.size(); ++i)
+						{
+							if (Mesas[i]->getJugador()->getNombre()==nombre){
+								habilitado = true;
+								posjuego = i;
+								i = Mesas.size();
+							}else{ 
+								habilitado = false;
+							}
+						}
+						if (habilitado==true){
+							cout << "Ingrese su apuesta: ";
+							cin >> apuesta;
+
+							while (apuesta > Jugadores[posjugador]->getDinero()){
+							cout << "No tiene suficiente dinero, para apostar esa cantidad!" << endl;
+							cout << "Ingrese su apuesta: ";
+							cin >> apuesta;
+							}//VALIDACION DEL DINERO
+
+
+
+						}else{
+							cout << "Lo sentimos, no esta asignado a ninguna mesa, consulte al administrador para asignarlo a una.. " << endl << endl;
+						}
+
+						
+
 					}else{
 						if (i==Jugadores.size()-1)
 							cout << "USUARIO INCORRECTO" << endl << endl;
@@ -151,7 +184,7 @@ int main(){
 				{
 					if (Administradores[i]->getNombre()==nombre && Administradores[i]->getID() == ID){
 						cout << "---MENU PARA ADMINISTRADORES--" << endl << endl;
-
+						i= Administradores.size();
 						cout << "Ingrese la opcion que desea:\n1.Agregar Mesa\n2.Modificar Mesa\n3.Eliminar Mesa: ";
 						cin >> opc2;
 						if (opc2==1){
@@ -250,7 +283,19 @@ int main(){
 
 								cout << "MESA MODIFICADA CON EXITO!!" << endl << endl;
 
-						}//FIN MODIFICAR MESAS..
+								//FIN MODIFICAR MESAS
+						}else{
+							//ELIMINAR MESAS
+							cout << "---ELIMINAR MESAS---" << endl << endl;
+							for (int i = 0; i < Mesas.size(); ++i)
+							{
+								cout << i << " " << Mesas[i]->getNum() << " " << Mesas[i]->getTipo() << " " << Mesas[i]->getRepartidor()->getNombre() << " " << Mesas[i]->getJugador()->getNombre() << endl;
+							}
+
+							cout << "Que posicion desea eliminar?: ";
+							cin >> posmesa;
+							Mesas.erase(posmesa+Mesas.begin());
+						}
 							
 					}else{
 						if (i==Administradores.size()-1)
@@ -266,10 +311,9 @@ int main(){
 	}//FIN WHILE, MENU GENERAL
 
 
+}
 
-
-
-
+bool SimuladorJuego(Baraja* baraj){
 
 
 }
