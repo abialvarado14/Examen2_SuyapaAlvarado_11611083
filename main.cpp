@@ -14,7 +14,7 @@ int main(){
 	vector <Repartidor*> Repartidores;
 	vector <Administrador*> Administradores;
 	vector <Jugador*> Jugadores;
-	int opc, rangopc, difopc, opc2, num, tipopc, posjug, posrep;
+	int opc, rangopc, difopc, opc2, num, tipopc, posjug, posrep, posmesa;
 	string lugar, apodo, nombre, ID, rango, dificultad, tipo;
 	int edad, year;
 	double dineroj, sueldo;
@@ -195,13 +195,62 @@ int main(){
 
 								Mesa* mes = new Mesa(num, tipo, Repartidores[posrep], Jugadores[posjug]);
 								Mesas.push_back(mes);
+							//FIN AGREGAR MESAS VALIDADAS...
+							}
 
 
+						} else if (opc2==2){
+							cout << "---MODIFICAR MESAS---" << endl << endl;
+							for (int i = 0; i < Mesas.size(); ++i)
+							{
+								cout << i << " " << Mesas[i]->getNum() << " " << Mesas[i]->getTipo() << " " << Mesas[i]->getRepartidor()->getNombre() << " " << Mesas[i]->getJugador()->getNombre() << endl;
+							}
 
-							}//FIN AGREGAR MESAS, VALIDADAS
+							cout << "Que posicion desea cambiar: ";
+							cin >> posmesa;
 
+							cout << "Ingrese numero de mesa: ";
+								cin >> num;
+								cout << "Ingrese tipo de mesa: \n1.VIP\n2.Clasica\n3.Viajero: ";
+								cin >> tipopc;
 
-						}//FIN AGREGAR MESAS, MENU
+								if (tipopc==1)
+									tipo = "VIP";
+								else if (tipopc==2)
+									tipo = "Clasica";
+								else
+									tipo = "Viajero";
+
+								cout << "--REPARTIDORES--" << endl;
+								for (int i = 0; i < Repartidores.size(); ++i)
+								{
+									cout << i << " " << Repartidores[i]->getNombre() << " " << Repartidores[i]->getDificultad() << " " << Repartidores[i]->getDinero() << endl;
+								}
+
+								cout << "Ingrese la posicion del repartidor que desea: ";
+								cin >> posrep;
+
+								while (posrep>Repartidores.size() || posrep<0){
+									cout << "ERROOR.. posicion inexistente" << endl;
+									cout << "Ingrese la posicion del repartidor que desea: ";
+									cin >> posrep;
+								}
+								cout << "---JUGADORES--" << endl;
+								for (int i = 0; i < Jugadores.size(); ++i)
+								{
+									cout << i << " " << Jugadores[i]->getNombre() << " " << Jugadores[i]->getEdad() << " " << Jugadores[i]->getDinero() << endl;
+								}
+								cout << "Ingrese la posicion del jugador que desea: ";
+								cin >> posjug;
+
+								Mesas[posmesa]->setNum(num);
+								Mesas[posmesa]->setTipo(tipo); 
+								Mesas[posmesa]->setRepartidor(Repartidores[posrep]);
+								Mesas[posmesa]->setJugador(Jugadores[posjug]);
+
+								cout << "MESA MODIFICADA CON EXITO!!" << endl << endl;
+
+						}//FIN MODIFICAR MESAS..
 							
 					}else{
 						if (i==Administradores.size()-1)
